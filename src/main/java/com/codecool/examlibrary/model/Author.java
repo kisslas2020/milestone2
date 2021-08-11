@@ -1,18 +1,32 @@
 package com.codecool.examlibrary.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Author {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String name;
     @OneToMany(mappedBy = "author")
-    private List<Book> books;
+    @JsonIgnore
+    private List<Book> books = new ArrayList<>();
+
+    public Author() {
+    }
+
+    public Author(Long id, String name, List<Book> books) {
+        Id = id;
+        this.name = name;
+        this.books = books;
+    }
 
     public Long getId() {
         return Id;

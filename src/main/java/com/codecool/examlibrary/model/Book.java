@@ -1,17 +1,32 @@
 package com.codecool.examlibrary.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.*;
+
 @Entity
 public class Book {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private Integer year;
+    private int year;
     @ManyToOne
+    @JsonIgnore
     private Author author;
+
+    public Book() {
+    }
+
+    public Book(Long id, String title, int year, Author author) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
+        this.author = author;
+    }
 
     public Long getId() {
         return id;
