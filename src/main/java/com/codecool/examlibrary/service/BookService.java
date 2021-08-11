@@ -7,6 +7,7 @@ import com.codecool.examlibrary.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class BookService {
@@ -24,12 +25,12 @@ public class BookService {
     }
 
     public Book findById(Long id) {
-        return bookRepository.findById(id).orElseThrow();
+        return bookRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     public Book createBook(Book book) {
         if (book.getId() != null) {
-            Book saved = bookRepository.findById(book.getId()).orElseThrow();
+            Book saved = bookRepository.findById(book.getId()).orElseThrow(IllegalArgumentException::new);
             saved.setAuthor(book.getAuthor());
             saved.setYear(book.getYear());
             saved.setTitle(book.getTitle());

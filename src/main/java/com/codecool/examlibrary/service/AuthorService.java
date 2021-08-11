@@ -6,6 +6,7 @@ import com.codecool.examlibrary.repository.AuthorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +24,7 @@ public class AuthorService {
     }
 
     public Author findById(Long id) {
-        return authorRepository.findById(id).orElseThrow();
+        return authorRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     public Author createOrUpdate(Author author) {
