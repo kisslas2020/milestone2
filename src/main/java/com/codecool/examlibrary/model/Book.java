@@ -15,7 +15,6 @@ public class Book {
     private String title;
     private int year;
     @ManyToOne
-    @JsonIgnore
     private Author author;
 
     public Book() {

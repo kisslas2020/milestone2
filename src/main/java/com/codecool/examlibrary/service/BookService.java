@@ -23,18 +23,26 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-
     public Book findById(Long id) {
         return bookRepository.findById(id).orElseThrow();
     }
 
     public Book createBook(Book book) {
-        Author author = book.getAuthor();
-        if (author == null || !authorRepository.existsById(author.getId())) {
-            Author saved = authorRepository.save(author);
-            book.setAuthor(saved);
+        if (book.getId() != null) {
+            Book saved = bookRepository.findById(book.getId()).orElseThrow();
+            saved.setAuthor(book.getAuthor());
+            saved.setYear(book.getYear());
+            saved.setTitle(book.getTitle());
+            return bookRepository.save(saved);
         }
-        return bookRepository.save(book);
+        if (book.getAuthor() == null) {
+            return bookRepository.save(book);
+        } else if (book.getAuthor().getId() == null) {
+            Author author = authorRepository.save(book.getAuthor());
+            return bookRepository.save(book);
+        } else {
+            return bookRepository.save(book);
+        }
     }
 
     public void deleteById(Long id) {

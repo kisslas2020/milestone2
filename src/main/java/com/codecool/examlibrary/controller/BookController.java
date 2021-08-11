@@ -28,13 +28,6 @@ public class BookController {
 
     @PostMapping
     public Book createBook(@RequestBody Book book) {
-        if (book.getId() != null) {
-            Book saved = findById(book.getId());
-            saved.setAuthor(book.getAuthor());
-            saved.setTitle(book.getTitle());
-            saved.setYear(book.getYear());
-            return bookService.createBook(saved);
-        }
         return bookService.createBook(book);
     }
 
